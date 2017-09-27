@@ -1,0 +1,11 @@
+[Unit]
+Description=CRI-O daemon
+Documentation=https://github.com/kubernetes-incubator/cri-o
+
+[Service]
+ExecStart=/usr/local/bin/crio --stream-address 192.168.199.20
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

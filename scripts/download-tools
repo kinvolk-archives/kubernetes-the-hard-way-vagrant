@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd "${dir}/../tools/"
+trap 'popd' EXIT
+
+echo "Downloading tools ..."
+
+# shellcheck source=versions.bash
+source "${dir}/versions.bash"
+
+curl -sSL \
+  -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-apiserver" \
+  -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-controller-manager" \
+  -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-scheduler" \
+  -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-proxy" \
+  -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubelet" \
+  -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl"
+
+
+curl -sSL \
+  -O "https://github.com/coreos/etcd/releases/download/${etcd_version}/etcd-${etcd_version}-linux-amd64.tar.gz"
+
+tar -xf "etcd-${etcd_version}-linux-amd64.tar.gz"
+
+curl -sSL \
+  -O "https://github.com/containernetworking/plugins/releases/download/v0.6.0/cni-plugins-amd64-v0.6.0.tgz" \
+  -O "https://github.com/opencontainers/runc/releases/download/v1.0.0-rc4/runc.amd64" \
+  -O "https://storage.googleapis.com/kubernetes-the-hard-way/crio-amd64-v1.0.0-beta.0.tar.gz"
+
+tar -xf crio-amd64-v1.0.0-beta.0.tar.gz
+
+chmod +x \
+  kube-apiserver \
+  kube-controller-manager \
+  kube-scheduler \
+  kube-proxy \
+  kubelet \
+  kubectl \
+  runc.amd64
