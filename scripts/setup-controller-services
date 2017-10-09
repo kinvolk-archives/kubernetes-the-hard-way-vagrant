@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd "${dir}/../"
+trap 'popd' EXIT
+
+for i in {0..2}; do
+  cat <<'EOF' | vagrant ssh "controller-${i}" -- sudo bash
+
+mkdir -p /var/lib/kubernetes
+
+cp \
+  /vagrant/certificates/ca.pem \
+  /vagrant/certificates/ca-key.pem \
+  /vagrant/certificates/kubernetes-key.pem \
+  /vagrant/certificates/kubernetes.pem \
+  /vagrant/config/encryption-config.yaml \
+  /var/lib/kubernetes/
+
+cp \
+  /vagrant/tools/kube-apiserver \
+  /vagrant/tools/kube-controller-manager \
+  /vagrant/tools/kube-scheduler \
+  /vagrant/tools/kubectl \
+  /usr/local/bin/
+
+cp \
+  "/vagrant/config/$(hostname)-kube-apiserver.service" \
+  /etc/systemd/system/kube-apiserver.service
+cp \
+  "/vagrant/config/$(hostname)-kube-scheduler.service" \
+  /etc/systemd/system/kube-scheduler.service
+cp \
+  "/vagrant/config/$(hostname)-kube-controller-manager.service" \
+  /etc/systemd/system/kube-controller-manager.service
+
+systemctl daemon-reload
+systemctl enable kube-apiserver kube-controller-manager kube-scheduler
+systemctl start kube-apiserver kube-controller-manager kube-scheduler
+EOF
+done
