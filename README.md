@@ -186,6 +186,18 @@ Welcome to nginx!
 Welcome to nginx!
 ```
 
+### Connect to services from host
+
+`10.32.0.0/16` is the IP range for services. In order to connect to a service
+from the host, one of the worker nodes (with `kube-proxy`) must be used as a
+gateway. Example:
+
+
+```
+sudo route add -net 10.32.0.0/16 gw 192.168.199.22
+```
+
+
 ## Todos
 
 * [ ] Add setup of a frontend loadbalancer and use it for HA controllers
