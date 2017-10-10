@@ -14,12 +14,14 @@ Requires=crio.service
 
 [Service]
 ExecStart=/usr/local/bin/kubelet \\
+  --anonymous-auth=false \\
+  --authorization-mode=Webhook \\
+  --client-ca-file=/var/lib/kubernetes/ca.pem \\
   --allow-privileged=true \\
   --cluster-dns=10.32.0.10 \\
   --cluster-domain=cluster.local \\
   --container-runtime=remote \\
   --container-runtime-endpoint=unix:///var/run/crio.sock \\
-  --enable-custom-metrics \\
   --image-pull-progress-deadline=2m \\
   --image-service-endpoint=unix:///var/run/crio.sock \\
   --kubeconfig=/var/lib/kubelet/kubeconfig \\

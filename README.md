@@ -5,6 +5,7 @@ Vagrant configuration and scripts for a Kubernetes setup, the hard way.
 The setup follows https://github.com/kelseyhightower/kubernetes-the-hard-way
 with the following exceptions:
 
+* `cri-o` is used as a container runtime, not `cri-containerd`
 * No highly available controllers yet. While 3 controller nodes are setup,
   only the first (`controller-0` / `192.168.199.10`) is used as an
   endpoint.
@@ -122,6 +123,12 @@ etcd-1               Healthy   {"health": "true"}
 etcd-2               Healthy   {"health": "true"}
 etcd-0               Healthy   {"health": "true"}
 [...]
+```
+
+Create `ClusterRole`'s for kubelet API auth:
+
+```
+./scripts/setup-kubelet-api-cluster-role
 ```
 
 Setup the worker binaries, services and configuration:

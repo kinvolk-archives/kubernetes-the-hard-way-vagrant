@@ -15,6 +15,7 @@ vagrant up
 ./scripts/generate-kubeconfig-worker
 ./scripts/setup-etcd
 ./scripts/setup-controller-services
+./scripts/setup-kubelet-api-cluster-role
 ./scripts/setup-worker-services
 ./scripts/configure-kubectl-on-host
 echo -e "\033[1mFinished. Cluster should be healthy and soon in state ready:\033[0m"
