@@ -204,6 +204,25 @@ gateway. Example:
 sudo route add -net 10.32.0.0/24 gw 192.168.199.22
 ```
 
+### Use [Traefik](https://traefik.io/) loadbalancer
+
+```
+./scripts/setup-traefik
+[...]
+curl 192.168.199.30
+404 page not found
+```
+
+To test traefik is actually doing its job, you can create an ingress rule
+for the nginx service that you created above:
+
+```
+kubectl apply -f ./deployments/nginx-ingress.yaml
+echo "192.168.199.30 nginx.kthw" | sudo tee -a /etc/hosts
+curl nginx.kthw
+<!DOCTYPE html>
+[...]
+```
 
 ## Todos
 

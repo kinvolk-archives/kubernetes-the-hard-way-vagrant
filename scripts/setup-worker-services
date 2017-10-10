@@ -27,7 +27,7 @@ mkdir -p \
 
 tar -xvf /vagrant/tools/cni-plugins-amd64-v0.6.0.tgz -C /opt/cni/bin/
 
-cp /vagrant/tools/runc.amd64 /usr/local/bin/runc
+cp /vagrant/tools/runc /usr/local/bin/
 cp /vagrant/tools/{crio,crioctl,kpod,kube-proxy,kubelet,kubectl} /usr/local/bin/
 cp /vagrant/tools/{conmon,pause} /usr/local/libexec/crio/
 cp /vagrant/tools/{crio.conf,seccomp.json} /etc/crio/

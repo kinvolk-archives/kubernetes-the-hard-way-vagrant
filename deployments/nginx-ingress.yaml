@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: nginx.kthw
+    http:
+      paths:
+      - backend:
+          serviceName: nginx
+          servicePort: 8080
