@@ -26,4 +26,11 @@ Vagrant.configure("2") do |config|
         c.vm.provision :shell, :path => "scripts/vagrant-setup-hosts-file.bash"
     end
   end
+
+  config.vm.define "traefik-0", autostart: false do |c|
+      c.vm.hostname = "traefik-0"
+      c.vm.network "private_network", ip: "192.168.199.30"
+
+      c.vm.provision :shell, :path => "scripts/vagrant-setup-routes.bash"
+  end
 end

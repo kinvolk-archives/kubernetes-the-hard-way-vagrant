@@ -33,6 +33,13 @@ curl -sSL \
 
 tar -xf crio-amd64-v1.0.0-beta.0.tar.gz
 
+mv runc.amd64 runc
+
+curl -sSL \
+  -O "https://github.com/containous/traefik/releases/download/${traefik_version}/traefik_linux-amd64"
+
+mv traefik_linux-amd64 traefik
+
 chmod +x \
   kube-apiserver \
   kube-controller-manager \
@@ -40,4 +47,5 @@ chmod +x \
   kube-proxy \
   kubelet \
   kubectl \
-  runc.amd64
+  runc \
+  traefik

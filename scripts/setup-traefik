@@ -1,0 +1,98 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd "${dir}/../"
+trap 'popd' EXIT
+
+vagrant up traefik-0
+
+kubectl --namespace=kube-system create serviceaccount traefik
+
+cat <<EOF | vagrant ssh "controller-0" -- kubectl apply -f -
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - endpoints
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-ingress-controller
+subjects:
+- kind: ServiceAccount
+  name: traefik
+  namespace: kube-system
+EOF
+
+# shellcheck disable=SC2046
+cat <<EOF | vagrant ssh "traefik-0" -- sudo bash
+
+set -euo pipefail
+
+mkdir -p /etc/kubernetes
+cp /vagrant/certificates/ca.pem /etc/kubernetes/
+
+cp /vagrant/tools/traefik /usr/local/bin/
+setcap cap_net_bind_service=+ep /usr/local/bin/traefik
+
+cat >/etc/traefik.toml <<TRAEFIK_CONFIG
+
+logLevel = "INFO"
+
+[kubernetes]
+endpoint = "https://192.168.199.10:6443"
+token = "$(kubectl --namespace kube-system get secrets $(kubectl --namespace kube-system get serviceaccount traefik -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 -d)"
+certAuthFilePath = "/etc/kubernetes/ca.pem"
+
+[accessLog]
+
+TRAEFIK_CONFIG
+
+cat >/etc/systemd/system/traefik.service <<TRAEFIK_SERVICE
+[Unit]
+Description=Traefik
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/traefik --configFile=/etc/traefik.toml
+Restart=always
+WatchdogSec=1s
+
+[Install]
+WantedBy=multi-user.target
+
+TRAEFIK_SERVICE
+
+systemctl daemon-reload
+systemctl enable traefik
+systemctl start traefik
+EOF
