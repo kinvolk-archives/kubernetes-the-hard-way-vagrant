@@ -18,7 +18,7 @@ ExecStart=/usr/local/bin/kubelet \
   --image-service-endpoint=unix:///var/run/crio.sock \
   --kubeconfig=/var/lib/kubelet/kubeconfig \
   --network-plugin=cni \
-  --pod-cidr=10.20.0.0/16 \
+  --pod-cidr=10.11.0.0/16 \
   --register-node=true \
   --require-kubeconfig \
   --runtime-request-timeout=10m \
