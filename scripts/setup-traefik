@@ -69,7 +69,7 @@ cat >/etc/traefik.toml <<TRAEFIK_CONFIG
 logLevel = "INFO"
 
 [kubernetes]
-endpoint = "https://192.168.199.10:6443"
+endpoint = "https://192.168.199.40:6443"
 token = "$(kubectl --namespace kube-system get secrets $(kubectl --namespace kube-system get serviceaccount traefik -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 -d)"
 certAuthFilePath = "/etc/kubernetes/ca.pem"
 

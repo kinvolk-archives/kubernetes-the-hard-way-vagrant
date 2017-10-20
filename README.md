@@ -6,13 +6,11 @@ The setup follows https://github.com/kelseyhightower/kubernetes-the-hard-way
 with the following exceptions:
 
 * `cri-o` is used as a container runtime, not `cri-containerd`
-* No highly available controllers yet. While 3 controller nodes are setup,
-  only the first (`controller-0` / `192.168.199.10`) is used as an
-  endpoint.
 * The `pod-cidr` is `10.2${i}.0.0/16`, routes are provisioned from
   `scripts/vagrant-setup-routes.bash` automatically
 * For `crio`, an explicit `--stream-address` must be set, as the address
   of the default interface isn't routable (see e.g. [`config/worker-0-crio.service`](config/worker-0-crio.service))
+* `192.168.199.40` is the IP of the loadbalancer (haproxy) for HA controllers
 
 ## Requirements Host
 
@@ -223,7 +221,3 @@ curl nginx.kthw
 <!DOCTYPE html>
 [...]
 ```
-
-## Todos
-
-* [ ] Add setup of a frontend loadbalancer and use it for HA controllers
