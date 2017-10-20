@@ -16,8 +16,8 @@ with the following exceptions:
 
 * Vagrant (with VirtualBox)
 * Minimum of 6x 512MB of free RAM
-* `cfssl`, `cfssljson` and `kubectl` (`scripts/install-tools` can be used
-  to download and install the binaries to `/usr/local/bin`)
+* `cfssl`, `cfssljson` and `kubectl` (on Linux, `scripts/install-tools` can be
+  used to download and install the binaries to `/usr/local/bin`)
 
 ## Setup
 
@@ -221,3 +221,10 @@ curl nginx.kthw
 <!DOCTYPE html>
 [...]
 ```
+
+## Pitfalls
+
+### Error loading config file "/var/log": read /var/log: is a directory
+
+On OSX, `KUBECONFIG` apparently needs to be set explicitly. `~/.kube/config`
+is a good place and the default on Linux.
