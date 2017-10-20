@@ -221,3 +221,10 @@ curl nginx.kthw
 <!DOCTYPE html>
 [...]
 ```
+
+## Pitfalls
+
+### Error loading config file "/var/log": read /var/log: is a directory
+
+On OSX, `KUBECONFIG` apparently needs to be set explicitly. `~/.kube/config`
+is a good place and the default on Linux.
