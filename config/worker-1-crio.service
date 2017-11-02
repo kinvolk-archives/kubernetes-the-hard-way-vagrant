@@ -3,7 +3,7 @@ Description=CRI-O daemon
 Documentation=https://github.com/kubernetes-incubator/cri-o
 
 [Service]
-ExecStart=/usr/local/bin/crio --stream-address 192.168.199.21
+ExecStart=/usr/local/bin/crio --stream-address 192.168.199.21 --runtime /usr/local/bin/runc
 Restart=always
 RestartSec=10s
 
