@@ -11,9 +11,8 @@ for i in {0..2}; do
   cat <<'EOF' | vagrant ssh "worker-${i}" -- sudo bash
 set -euo pipefail
 
-add-apt-repository -y ppa:alexlarsson/flatpak
 apt-get update
-apt-get install -y socat libgpgme11 libostree-1-1
+apt-get install -y socat libgpgme11
 
 mkdir -p \
   /etc/containers \
