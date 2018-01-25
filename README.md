@@ -15,7 +15,7 @@ with the following exceptions:
 ## Requirements Host
 
 * Vagrant (with VirtualBox)
-* Minimum of 6x 512MB of free RAM
+* Minimum of 7x 512MB of free RAM
 * `cfssl`, `cfssljson` and `kubectl` (on Linux, `scripts/install-tools` can be
   used to download and install the binaries to `/usr/local/bin`)
 
@@ -138,9 +138,9 @@ vagrant ssh controller-0
 kubectl get nodes
 
 NAME       STATUS    AGE       VERSION
-worker-0   Ready     1m        v1.7.6
-worker-1   Ready     55s       v1.7.6
-worker-2   Ready     12s       v1.7.6
+worker-0   Ready     1m        v1.9.2
+worker-1   Ready     55s       v1.9.2
+worker-2   Ready     12s       v1.9.2
 ```
 
 Configure a `kubernetes-the-hard-way` context on your host, set it as
