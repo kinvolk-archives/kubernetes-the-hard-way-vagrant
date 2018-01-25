@@ -162,7 +162,7 @@ kubectl get nodes
 Deploy the DNS add-on and verify it's working:
 
 ```
-kubectl create -f ./deployments/kube-dns.yaml
+kubectl create -f ./manifests/kube-dns.yaml
 [...]
 kubectl get pods -l k8s-app=kube-dns -n kube-system
 [...]
@@ -175,14 +175,9 @@ kubectl exec -ti $POD_NAME -- nslookup kubernetes
 ### Smoke tests
 
 ```
-kubectl create -f ./deployments/nginx.yaml
+kubectl create -f ./manifests/nginx.yaml
 deployment "nginx" created
-
-POD_NAME=$(kubectl get pods -l app=nginx -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -ti $POD_NAME -- nginx -v
-
-kubectl expose deployment nginx --port 80 --type NodePort
-service "nginx" exposed
+service "nginx" created
 
 NODE_PORT=$(kubectl get svc nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 for i in {0..2}; do curl -sS 192.168.199.2${i}:${NODE_PORT} | awk '/<h1>/{gsub("<[/]*h1>", ""); print $0}'; done
@@ -215,7 +210,7 @@ To test traefik is actually doing its job, you can create an ingress rule
 for the nginx service that you created above:
 
 ```
-kubectl apply -f ./deployments/nginx-ingress.yaml
+kubectl apply -f ./manifests/nginx-ingress.yaml
 echo "192.168.199.30 nginx.kthw" | sudo tee -a /etc/hosts
 curl nginx.kthw
 <!DOCTYPE html>
