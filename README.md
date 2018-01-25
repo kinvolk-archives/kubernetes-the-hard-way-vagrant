@@ -194,7 +194,11 @@ gateway. Example:
 
 
 ```
+# On Linux
 sudo route add -net 10.32.0.0/24 gw 192.168.199.22
+
+# On macOS
+sudo route -n add -net 10.32.0.0/24 192.168.199.22
 ```
 
 ### Use [Traefik](https://traefik.io/) loadbalancer
