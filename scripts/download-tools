@@ -12,6 +12,15 @@ echo "Downloading tools ..."
 # shellcheck source=versions.bash
 source "${dir}/versions.bash"
 
+
+curl -sSL \
+  -O "https://pkg.cfssl.org/${cfssl_version}/cfssl_linux-amd64" \
+  -O "https://pkg.cfssl.org/${cfssl_version}/cfssljson_linux-amd64"
+
+mv cfssl_linux-amd64 cfssl
+mv cfssljson_linux-amd64 cfssljson
+
+
 curl -sSL \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-apiserver" \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-controller-manager" \
@@ -41,6 +50,8 @@ curl -sSL \
 mv traefik_linux-amd64 traefik
 
 chmod +x \
+  cfssl \
+  cfssljson \
   kube-apiserver \
   kube-controller-manager \
   kube-scheduler \

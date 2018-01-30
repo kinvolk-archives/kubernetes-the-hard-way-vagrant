@@ -8,11 +8,11 @@ pushd "${dir}/../certificates"
 trap 'popd' EXIT
 
 for i in {0..2}; do
-	cfssl gencert \
+	../tools/cfssl gencert \
 		-ca=ca.pem \
 		-ca-key=ca-key.pem \
 		-config=ca-config.json \
 		-hostname="worker-${i},192.168.199.2$((i))" \
 		-profile=kubernetes \
-		"worker-${i}-csr.json" | cfssljson -bare "worker-${i}"
+		"worker-${i}-csr.json" | ../tools/cfssljson -bare "worker-${i}"
 done

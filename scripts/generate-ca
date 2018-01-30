@@ -7,4 +7,6 @@ readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "${dir}/../certificates"
 trap 'popd' EXIT
 
-cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+pwd
+
+../tools/cfssl gencert -initca ca-csr.json | ../tools/cfssljson -bare ca

@@ -7,9 +7,9 @@ readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "${dir}/../certificates"
 trap 'popd' EXIT
 
-cfssl gencert \
+../tools/cfssl gencert \
   -ca=ca.pem \
   -ca-key=ca-key.pem \
   -config=ca-config.json \
   -profile=kubernetes \
-  kube-proxy-csr.json | cfssljson -bare kube-proxy
+  kube-proxy-csr.json | ../tools/cfssljson -bare kube-proxy
