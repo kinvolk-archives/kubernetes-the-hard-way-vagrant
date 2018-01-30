@@ -9,7 +9,7 @@ trap 'popd' EXIT
 
 vagrant up traefik-0
 
-kubectl --namespace=kube-system create serviceaccount traefik
+./tools/kubectl --namespace=kube-system create serviceaccount traefik
 
 cat <<EOF | vagrant ssh "controller-0" -- kubectl apply -f -
 
@@ -70,7 +70,7 @@ logLevel = "INFO"
 
 [kubernetes]
 endpoint = "https://192.168.199.40:6443"
-token = "$(kubectl --namespace kube-system get secrets $(kubectl --namespace kube-system get serviceaccount traefik -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 -d)"
+token = "$(./tools/kubectl --namespace kube-system get secrets $(./tools/kubectl --namespace kube-system get serviceaccount traefik -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 -d)"
 certAuthFilePath = "/etc/kubernetes/ca.pem"
 
 [accessLog]

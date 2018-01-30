@@ -110,7 +110,7 @@ Setup the controller services and verify they are up and running:
 ```
 ./scripts/setup-controller-services
 [...]
-for c in controller-0 controller-1 controller-2; do vagrant ssh $c -- kubectl get componentstatuses; done
+for c in controller-0 controller-1 controller-2; do vagrant ssh $c -- ./tools/kubectl get componentstatuses; done
 
 NAME                 STATUS    MESSAGE              ERROR
 controller-manager   Healthy   ok
@@ -133,7 +133,7 @@ Setup the worker binaries, services and configuration:
 ./scripts/setup-worker-services
 [...]
 vagrant ssh controller-0
-kubectl get nodes
+./tools/kubectl get nodes
 
 NAME       STATUS    AGE       VERSION
 worker-0   Ready     1m        v1.9.2
@@ -147,9 +147,9 @@ default and verify everything is ok:
 ```
 ./scripts/configure-kubectl-on-host
 
-kubectl get componentstatuses
+./tools/kubectl get componentstatuses
 [...]
-kubectl get nodes
+./tools/kubectl get nodes
 [...]
 ```
 
@@ -160,24 +160,24 @@ kubectl get nodes
 Deploy the DNS add-on and verify it's working:
 
 ```
-kubectl create -f ./manifests/kube-dns.yaml
+./tools/kubectl create -f ./manifests/kube-dns.yaml
 [...]
-kubectl get pods -l k8s-app=kube-dns -n kube-system
+./tools/kubectl get pods -l k8s-app=kube-dns -n kube-system
 [...]
-kubectl run busybox --image=busybox --command -- sleep 3600
+./tools/kubectl run busybox --image=busybox --command -- sleep 3600
 [...]
-POD_NAME=$(kubectl get pods -l run=busybox -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -ti $POD_NAME -- nslookup kubernetes
+POD_NAME=$(./tools/kubectl get pods -l run=busybox -o jsonpath="{.items[0].metadata.name}")
+./tools/kubectl exec -ti $POD_NAME -- nslookup kubernetes
 ```
 
 ### Smoke tests
 
 ```
-kubectl create -f ./manifests/nginx.yaml
+./tools/kubectl create -f ./manifests/nginx.yaml
 deployment "nginx" created
 service "nginx" created
 
-NODE_PORT=$(kubectl get svc nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
+NODE_PORT=$(./tools/kubectl get svc nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
 for i in {0..2}; do curl -sS 192.168.199.2${i}:${NODE_PORT} | awk '/<h1>/{gsub("<[/]*h1>", ""); print $0}'; done
 Welcome to nginx!
 Welcome to nginx!
@@ -212,7 +212,7 @@ To test traefik is actually doing its job, you can create an ingress rule
 for the nginx service that you created above:
 
 ```
-kubectl apply -f ./manifests/nginx-ingress.yaml
+./tools/kubectl apply -f ./manifests/nginx-ingress.yaml
 echo "192.168.199.30 nginx.kthw" | sudo tee -a /etc/hosts
 curl nginx.kthw
 <!DOCTYPE html>
