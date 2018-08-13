@@ -20,7 +20,6 @@ ExecStart=/usr/local/bin/kubelet \
   --network-plugin=cni \
   --pod-cidr=10.21.0.0/16 \
   --register-node=true \
-  --require-kubeconfig \
   --runtime-request-timeout=10m \
   --tls-cert-file=/var/lib/kubelet/worker-1.pem \
   --tls-private-key-file=/var/lib/kubelet/worker-1-key.pem \
