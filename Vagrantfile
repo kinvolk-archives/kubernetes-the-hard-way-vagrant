@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "512"
+    vb.customize ["modifyvm", :id, "--audio", "none"]
   end
 
   # must be at the top
