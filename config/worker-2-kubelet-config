@@ -12,7 +12,6 @@ authorization:
 clusterDomain: "cluster.local"
 clusterDNS:
 - "10.32.0.10"
-podCIDR: "10.22.0.0/16"
 resolvConf: "/run/systemd/resolve/resolv.conf"
 runtimeRequestTimeout: "10m"
 tlsCertFile: "/var/lib/kubelet/worker-2.pem"
