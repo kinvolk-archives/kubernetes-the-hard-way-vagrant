@@ -27,6 +27,10 @@ Vagrant.configure("2") do |config|
         c.vm.network "private_network", ip: "192.168.199.1#{n}"
 
         c.vm.provision :shell, :path => "scripts/vagrant-setup-hosts-file.bash"
+
+        c.vm.provider "virtualbox" do |vb|
+          vb.memory = "640"
+        end
     end
   end
 
