@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+for i in {0..2}; do
+cat > "${dir}/../config/worker-${i}-kubelet-config" <<EOF
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+authentication:
+  anonymous:
+    enabled: false
+  webhook:
+    enabled: true
+  x509:
+    clientCAFile: "/var/lib/kubernetes/ca.pem"
+authorization:
+  mode: Webhook
+clusterDomain: "cluster.local"
+clusterDNS:
+- "10.32.0.10"
+podCIDR: "10.2${i}.0.0/16"
+runtimeRequestTimeout: "10m"
+tlsCertFile: "/var/lib/kubelet/worker-${i}.pem"
+tlsPrivateKeyFile: "/var/lib/kubelet/worker-${i}-key.pem"
+EOF
+done

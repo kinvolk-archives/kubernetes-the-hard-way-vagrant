@@ -4,7 +4,7 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/kube-apiserver \
-  --admission-control=Initializers,NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
+  --enable-admission-plugins=Initializers,NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
   --advertise-address=192.168.199.10 \
   --allow-privileged=true \
   --apiserver-count=3 \
@@ -22,7 +22,6 @@ ExecStart=/usr/local/bin/kube-apiserver \
   --etcd-servers=https://192.168.199.10:2379,https://192.168.199.11:2379,https://192.168.199.12:2379 \
   --event-ttl=1h \
   --experimental-encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \
-  --insecure-bind-address=0.0.0.0 \
   --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \
   --kubelet-client-certificate=/var/lib/kubernetes/kubernetes.pem \
   --kubelet-client-key=/var/lib/kubernetes/kubernetes-key.pem \

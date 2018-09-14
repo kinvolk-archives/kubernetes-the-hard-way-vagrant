@@ -42,6 +42,7 @@ cp /vagrant/config/kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
 cp /vagrant/certificates/ca.pem /var/lib/kubernetes/
 cp "/vagrant/certificates/$(hostname).pem" "/vagrant/certificates/$(hostname)-key.pem" /var/lib/kubelet
 cp "/vagrant/config/$(hostname).kubeconfig" /var/lib/kubelet/kubeconfig
+cp /vagrant/config/$(hostname)-kubelet-config  /var/lib/kubelet/kubelet-config.yaml
 
 cp "/vagrant/config/$(hostname)-kubelet.service" /etc/systemd/system/kubelet.service
 
