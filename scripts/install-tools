@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+readonly bindir="${BINDIR:-/usr/local/bin}"
 readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 readonly tmpdir=$(mktemp -d /tmp/kubernetes-the-hard-way-XXXXXX)
 mkdir -p "${tmpdir}"
@@ -18,12 +19,12 @@ curl -sSL \
 
 chmod +x cfssl_linux-amd64 cfssljson_linux-amd64
 
-sudo mv -v cfssl_linux-amd64 /usr/local/bin/cfssl
-sudo mv -v cfssljson_linux-amd64 /usr/local/bin/cfssljson
+mv -v cfssl_linux-amd64 "${BINDIR}/cfssl"
+mv -v cfssljson_linux-amd64 "${BINDIR}/cfssljson"
 
 curl -ssL \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl"
 
 chmod +x kubectl
 
-sudo mv -v kubectl /usr/local/bin/
+mv -v kubectl "${BINDIR}"
