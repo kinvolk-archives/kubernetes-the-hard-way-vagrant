@@ -13,6 +13,7 @@ clusterDomain: "cluster.local"
 clusterDNS:
 - "10.32.0.10"
 podCIDR: "10.21.0.0/16"
+resolvConf: "/run/systemd/resolve/resolv.conf"
 runtimeRequestTimeout: "10m"
 tlsCertFile: "/var/lib/kubelet/worker-1.pem"
 tlsPrivateKeyFile: "/var/lib/kubelet/worker-1-key.pem"
