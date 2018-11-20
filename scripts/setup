@@ -18,6 +18,7 @@ vagrant up
 ./scripts/setup-kubelet-api-cluster-role
 ./scripts/setup-worker-services
 ./scripts/configure-kubectl-on-host
+./scripts/setup-networking
 echo -e "\033[1mFinished. Cluster should be healthy and soon in state ready:\033[0m"
 kubectl get componentstatuses
 kubectl get nodes

@@ -6,8 +6,6 @@ The setup follows https://github.com/kelseyhightower/kubernetes-the-hard-way
 with the following exceptions:
 
 * `cri-o` is used as a container runtime, not `cri-containerd`
-* The `pod-cidr` is `10.2${i}.0.0/16`, routes are provisioned from
-  `scripts/vagrant-setup-routes.bash` automatically
 * For `crio`, an explicit `--stream-address` must be set, as the address
   of the default interface isn't routable (see e.g. [`config/worker-0-crio.service`](config/worker-0-crio.service))
 * `192.168.199.40` is the IP of the loadbalancer (haproxy) for HA controllers
@@ -26,9 +24,6 @@ with the following exceptions:
 To learn Kubernetes from the bottom up, it's recommended to go through
 KTHW manually. `vagrant up` gives you three controller and three worker
 nodes to do that.
-
-The `pod-cidr` is `10.2${i}.0.0/16`, for which the Vagrant nodes have
-configured routes (see `route -n`).
 
 The following KTHW parts can/should be skipped:
 
@@ -153,6 +148,23 @@ kubectl get componentstatuses
 [...]
 kubectl get nodes
 [...]
+```
+
+Install overlay network so pods on different nodes can connect with each other,
+by running following command:
+
+```bash
+./scripts/setup-networking
+```
+
+Now verify that the weave pods are all up and running, using following command:
+
+```console
+$ kubectl -n kube-system get pods -l name=weave-net
+NAME              READY     STATUS    RESTARTS   AGE
+weave-net-24wdp   2/2       Running   0          8m
+weave-net-bnxl6   2/2       Running   0          8m
+weave-net-jh9nx   2/2       Running   0          8m
 ```
 
 ## Using the cluster

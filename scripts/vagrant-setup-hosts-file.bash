@@ -12,3 +12,6 @@ cat <<EOF | sudo tee -a /etc/hosts
 192.168.199.21 worker-1
 192.168.199.22 worker-2
 EOF
+
+# Make sure all the nodes do port forwarding
+sudo sysctl -w net.ipv4.ip_forward=1
