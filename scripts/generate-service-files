@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -euo pipefail
+
+readonly dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+pushd "${dir}"
+trap 'popd' EXIT
+
+./generate-apiserver-service-file
+./generate-controller-manager-service-file
+./generate-crio-service-file
+./generate-etcd-service-files
+
+./generate-kubelet-config-file
+./generate-kubelet-service-file
+./generate-scheduler-service-file
