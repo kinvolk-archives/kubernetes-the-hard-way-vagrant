@@ -16,7 +16,7 @@ with the following exceptions:
 
 * Vagrant (with VirtualBox)
 * Minimum of 7x 512MB of free RAM
-* `cfssl`, `cfssljson` and `kubectl` (on Linux, `scripts/install-tools` can be
+* `cfssl`, `cfssljson` and `kubectl` (`scripts/install-tools` can be
   used to download and install the binaries to `/usr/local/bin`)
 
 ## Setup
