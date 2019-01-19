@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=versions.bash
 source "${dir}/versions.bash"

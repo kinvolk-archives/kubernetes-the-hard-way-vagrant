@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 pushd "${dir}/../tools/"
 trap 'popd' EXIT
@@ -19,7 +19,6 @@ curl -sSL \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kube-proxy" \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubelet" \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/linux/amd64/kubectl"
-
 
 curl -sSL \
   -O "https://github.com/coreos/etcd/releases/download/${etcd_version}/etcd-${etcd_version}-linux-amd64.tar.gz"
