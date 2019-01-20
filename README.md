@@ -12,6 +12,9 @@ with the following exceptions:
   of the default interface isn't routable (see e.g. [`config/worker-0-crio.service`](config/worker-0-crio.service))
 * `192.168.199.40` is the IP of the loadbalancer (haproxy) for HA controllers
 
+Please note that KTHW is a project to learn Kubernetes from bottom up
+and is not per se a guide to build clusters for production use!
+
 ## Requirements Host
 
 * Vagrant (with VirtualBox)
@@ -220,6 +223,15 @@ curl nginx.kthw
 <!DOCTYPE html>
 [...]
 ```
+
+## Contributing
+
+Contributions are welcome: KTHW Vagrant is meant to be a learning
+project and testbed for aspiring Kubernetes operators and CKAs
+([Certified Kubernetes Administrator](https://www.cncf.io/certification/cka/)).
+
+If you want to contribute code or updates, look for the label
+[good first issue](https://github.com/kinvolk/kubernetes-the-hard-way-vagrant/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
 ## Pitfalls
 
