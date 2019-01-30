@@ -70,7 +70,7 @@ logLevel = "INFO"
 
 [kubernetes]
 endpoint = "https://192.168.199.40:6443"
-token = "$(kubectl --namespace kube-system get secrets $(kubectl --namespace kube-system get serviceaccount traefik -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 -d)"
+token = "$(kubectl --namespace kube-system get secrets $(kubectl --namespace kube-system get serviceaccount traefik -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 --decode)"
 certAuthFilePath = "/etc/kubernetes/ca.pem"
 
 [accessLog]
