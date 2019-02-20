@@ -141,9 +141,9 @@ vagrant ssh controller-0
 kubectl get nodes
 
 NAME       STATUS    AGE       VERSION
-worker-0   Ready     1m        v1.3.0
-worker-1   Ready     55s       v1.3.0
-worker-2   Ready     12s       v1.3.0
+worker-0   Ready     1m        v1.13.0
+worker-1   Ready     55s       v1.13.0
+worker-2   Ready     12s       v1.13.0
 ```
 
 Configure a `kubernetes-the-hard-way` context on your host, set it as
