@@ -7,7 +7,7 @@ readonly dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 pushd "${dir}/../"
 trap 'popd' EXIT
 
-cat <<'EOF' | vagrant ssh "controller-0" -- kubectl apply -f -
+cat <<'EOF' | vagrant ssh "controller-0" -- sudo kubectl apply -f -
 
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -30,7 +30,7 @@ rules:
       - "*"
 EOF
 
-cat <<'EOF' | vagrant ssh "controller-0" -- kubectl apply -f -
+cat <<'EOF' | vagrant ssh "controller-0" -- sudo kubectl apply -f -
 
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
