@@ -31,6 +31,7 @@ cp /vagrant/tools/runc /usr/local/bin/
 cp /vagrant/tools/{crio,kube-proxy,kubelet,kubectl} /usr/local/bin/
 cp /vagrant/tools/{conmon,pause} /usr/local/libexec/crio/
 cp /vagrant/tools/{crio.conf,seccomp.json} /etc/crio/
+cp /vagrant/tools/crio.yaml /etc/
 cp /vagrant/tools/policy.json /etc/containers/
 
 cp "/vagrant/config/$(hostname)-10-bridge.conf" /etc/cni/net.d/10-bridge.conf
