@@ -162,10 +162,10 @@ kubectl get nodes
 
 ### Setup DNS add-on
 
-Deploy the DNS add-on and verify it's working:
+Deploy the `coredns` cluster add-on and verify it's working:
 
 ```
-kubectl create -f ./manifests/kube-dns.yaml
+kubectl create -f ./manifests/coredns.yaml
 [...]
 kubectl get pods -l k8s-app=kube-dns -n kube-system
 [...]
