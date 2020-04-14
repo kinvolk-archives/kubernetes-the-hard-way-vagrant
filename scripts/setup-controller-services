@@ -18,6 +18,7 @@ cp \
   /vagrant/certificates/kubernetes-key.pem \
   /vagrant/certificates/kubernetes.pem \
   /vagrant/config/encryption-config.yaml \
+  /vagrant/config/kube-controller-manager.kubeconfig \
   /var/lib/kubernetes/
 
 cp \
