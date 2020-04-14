@@ -12,3 +12,7 @@ cat <<EOF | sudo tee -a /etc/hosts
 192.168.199.21 worker-1
 192.168.199.22 worker-2
 EOF
+
+# This is added to get around the DNS issue in Ubuntu
+# See https://github.com/kubernetes/kubernetes/issues/66067
+sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
