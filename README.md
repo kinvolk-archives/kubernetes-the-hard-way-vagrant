@@ -178,7 +178,7 @@ kubectl exec -ti busybox -- nslookup kubernetes
 ### Smoke tests
 
 ```
-kubectl create -f ./manifests/nginx.yaml
+$ kubectl create -f ./manifests/nginx.yaml
 deployment "nginx" created
 service "nginx" created
 
