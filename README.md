@@ -8,8 +8,6 @@ with the following exceptions:
 * `cri-o` is used as a container runtime, not `cri-containerd`
 * The `pod-cidr` is `10.2${i}.0.0/16`, routes are provisioned from
   `scripts/vagrant-setup-routes.bash` automatically
-* For `crio`, an explicit `--stream-address` must be set, as the address
-  of the default interface isn't routable (see e.g. [`config/worker-0-crio.service`](config/worker-0-crio.service))
 * `192.168.199.40` is the IP of the loadbalancer (haproxy) for HA controllers
 
 Please note that KTHW is a project to learn Kubernetes from bottom up
@@ -60,6 +58,23 @@ Remove previously created certificates, tools kubeconfig files:
 ./scripts/distclean
 ```
 
+Generate the required certificates:
+
+```
+./scripts/generate-certs
+```
+
+Generate the kubeconfig files (as those include copies of the previously
+generated certificates):
+
+```
+./scripts/generate-kubeconfig-kube-proxy
+./scripts/generate-kubeconfig-worker
+./scripts/generate-kubeconfig-controller-manager
+./scripts/generate-cni-config
+./scripts/generate-service-files
+```
+
 Download required tools and files:
 
 ```
@@ -83,20 +98,6 @@ worker-1                  running (virtualbox)
 worker-2                  running (virtualbox)
 ```
 
-Generate the required certificates:
-
-```
-./scripts/generate-certs
-```
-
-Generate the kubeconfig files (as those include copies of the previously
-generated certificates):
-
-```
-./scripts/generate-kubeconfig-kube-proxy
-./scripts/generate-kubeconfig-worker
-```
-
 Setup etcd on the controller nodes and verify it has started:
 
 ```
@@ -110,13 +111,24 @@ e206d150eae73959, started, controller-2, https://192.168.199.12:2380, https://19
 e7e775a3da74a469, started, controller-1, https://192.168.199.11:2380, https://192.168.199.11:2379
 ```
 
-Setup the controller services and verify they are up and running:
+Setup the controller services:
 
 ```
 ./scripts/setup-controller-services
 [...]
-for c in controller-0 controller-1 controller-2; do vagrant ssh $c -- kubectl get componentstatuses; done
+```
 
+Configure a `kubernetes-the-hard-way` context on your host, set it as
+default.
+
+```
+./scripts/configure-kubectl-on-host
+```
+
+Verify controllers are up and running:
+
+```console
+$ kubectl get componentstatuses
 NAME                 STATUS    MESSAGE              ERROR
 controller-manager   Healthy   ok
 scheduler            Healthy   ok
@@ -125,6 +137,7 @@ etcd-2               Healthy   {"health": "true"}
 etcd-0               Healthy   {"health": "true"}
 [...]
 ```
+
 
 Create `ClusterRole`'s for kubelet API auth:
 
@@ -137,25 +150,13 @@ Setup the worker binaries, services and configuration:
 ```
 ./scripts/setup-worker-services
 [...]
-vagrant ssh controller-0
 kubectl get nodes
 
-NAME       STATUS    AGE       VERSION
-worker-0   Ready     1m        v1.3.0
-worker-1   Ready     55s       v1.3.0
-worker-2   Ready     12s       v1.3.0
-```
+NAME       STATUS   ROLES    AGE     VERSION
+worker-0   Ready    <none>   3m11s   v1.18.1
+worker-1   Ready    <none>   119s    v1.18.1
+worker-2   Ready    <none>   48s     v1.18.1
 
-Configure a `kubernetes-the-hard-way` context on your host, set it as
-default and verify everything is ok:
-
-```
-./scripts/configure-kubectl-on-host
-
-kubectl get componentstatuses
-[...]
-kubectl get nodes
-[...]
 ```
 
 ## Using the cluster
@@ -165,14 +166,13 @@ kubectl get nodes
 Deploy the DNS add-on and verify it's working:
 
 ```
-kubectl create -f ./manifests/kube-dns.yaml
+kubectl apply -f ./manifests/coredns.yaml
 [...]
 kubectl get pods -l k8s-app=kube-dns -n kube-system
 [...]
 kubectl run busybox --image=busybox:1.28 --command -- sleep 3600
 [...]
-POD_NAME=$(kubectl get pods -l run=busybox -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -ti $POD_NAME -- nslookup kubernetes
+kubectl exec -ti busybox -- nslookup kubernetes
 ```
 
 ### Smoke tests
