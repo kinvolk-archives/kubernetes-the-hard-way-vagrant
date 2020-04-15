@@ -23,19 +23,37 @@ mkdir -p \
   /var/lib/kubelet \
   /var/lib/kube-proxy \
   /var/lib/kubernetes \
-  /var/run/kubernetes
+  /var/run/kubernetes \
+  /usr/bin \
+  /usr/share/oci-umount/oci-umount.d \
+  /usr/share/containers \
+  /etc/sysconfig \
+  /usr/share/containers/oci/hooks.d
 
-tar -xvf /vagrant/tools/cni-plugins-amd64-v0.6.0.tgz -C /opt/cni/bin/
+tar -xvf /vagrant/tools/cni-plugins-linux-amd64-*.tgz -C /opt/cni/bin/
 
-cp /vagrant/tools/runc /usr/local/bin/
-cp /vagrant/tools/{crio,kube-proxy,kubelet,kubectl} /usr/local/bin/
-cp /vagrant/tools/{conmon,pause} /usr/local/libexec/crio/
-cp /vagrant/tools/{crio.conf,seccomp.json} /etc/crio/
-cp /vagrant/tools/policy.json /etc/containers/
+cp /vagrant/tools/runc /usr/bin/
+cp /vagrant/tools/conmon /usr/bin/
+cp /vagrant/tools/{kube-proxy,kubelet,kubectl} /usr/local/bin/
+cp /vagrant/tools/crio/bin/{crio,pinns} /usr/local/bin/
+
+cp /vagrant/tools/crio/etc/crio.conf /etc/crio/
+cp /vagrant/tools/crio/etc/crictl.yaml /etc/
+cp /vagrant/tools/crio/etc/crio-umount.conf /usr/share/oci-umount/oci-umount.d/
+cp /vagrant/tools/seccomp.json /usr/share/containers/
+cp /vagrant/tools/crio/contrib/policy.json /etc/containers/
 
 cp "/vagrant/config/$(hostname)-10-bridge.conf" /etc/cni/net.d/10-bridge.conf
-cp /vagrant/config/99-loopback.conf /etc/cni/net.d
-cp "/vagrant/config/$(hostname)-crio.service" /etc/systemd/system/crio.service
+cp /vagrant/config/99-loopback.conf /etc/cni/net.d/
+cp /vagrant/config/crio /etc/sysconfig/
+cp /vagrant/config/crio-metrics /etc/sysconfig/
+cp /vagrant/config/crio-network /etc/sysconfig/
+cp /vagrant/config/crio-storage /etc/sysconfig/
+cp /vagrant/config/registries.conf /etc/containers/
+cp /vagrant/config/storage.conf /etc/containers/
+cp /vagrant/tools/crio/contrib/crio.service /etc/systemd/system/crio.service
+cp /vagrant/tools/crio/contrib/crio-wipe.service /etc/systemd/system/crio-wipe.service
+cp /vagrant/tools/crio/contrib/crio-shutdown.service /etc/systemd/system/crio-shutdown.service
 
 cp /vagrant/config/kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
 

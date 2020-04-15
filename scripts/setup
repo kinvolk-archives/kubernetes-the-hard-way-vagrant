@@ -8,18 +8,20 @@ pushd "${dir}/../"
 trap 'popd' EXIT
 
 ./scripts/distclean
-./scripts/download-tools
-vagrant up
 ./scripts/generate-certs
 ./scripts/generate-kubeconfig-kube-proxy
 ./scripts/generate-kubeconfig-worker
+./scripts/generate-kubeconfig-controller-manager
 ./scripts/generate-cni-config
 ./scripts/generate-service-files
+./scripts/download-tools
+vagrant up --parallel
 ./scripts/setup-etcd
 ./scripts/setup-controller-services
+./scripts/configure-kubectl-on-host
 ./scripts/setup-kubelet-api-cluster-role
 ./scripts/setup-worker-services
-./scripts/configure-kubectl-on-host
 echo -e "\033[1mFinished. Cluster should be healthy and soon in state ready:\033[0m"
 kubectl get componentstatuses
 kubectl get nodes
+kubectl apply -f manifests/coredns.yaml

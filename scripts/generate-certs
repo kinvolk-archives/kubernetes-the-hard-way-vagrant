@@ -12,3 +12,4 @@ trap 'popd' EXIT
 ./generate-worker-certs
 ./generate-kube-proxy-cert
 ./generate-kubernetes-cert
+./generate-kube-controller-manager-cert

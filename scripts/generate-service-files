@@ -9,7 +9,6 @@ trap 'popd' EXIT
 
 ./generate-apiserver-service-file
 ./generate-controller-manager-service-file
-./generate-crio-service-file
 ./generate-etcd-service-files
 
 ./generate-kubelet-config-file
