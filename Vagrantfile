@@ -17,7 +17,6 @@ Vagrant.configure("2") do |config|
       c.vm.provision :shell, :path => "scripts/vagrant-setup-haproxy.bash"
 
       c.vm.provider "virtualbox" do |vb|
-        vb.memory = "256"
       end
   end
 
