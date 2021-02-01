@@ -29,5 +29,6 @@ cp \
 systemctl daemon-reload
 systemctl enable etcd
 systemctl start etcd
+systemctl status --no-pager etcd
 EOF
 done
