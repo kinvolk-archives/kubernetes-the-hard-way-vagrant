@@ -44,7 +44,7 @@ systemctl enable kube-apiserver kube-controller-manager kube-scheduler
 systemctl start kube-apiserver kube-controller-manager kube-scheduler
 EOF
 
-  until vagrant ssh "controller-${i}" -- curl --ipv4 --fail --silent --max-time 3 "http://127.0.0.1:8080/api" &>/dev/null; do
+  until vagrant ssh "controller-${i}" -- curl --ipv4 --fail --silent --max-time 3 -k "https://localhost:6443/healthz" &>/dev/null; do
     echo "Waiting for kube-apiserver to become ready in controller-${i}..."
     sleep 3
   done
