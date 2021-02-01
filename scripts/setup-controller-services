@@ -40,8 +40,10 @@ cp \
   /etc/systemd/system/kube-controller-manager.service
 
 systemctl daemon-reload
-systemctl enable kube-apiserver kube-controller-manager kube-scheduler
-systemctl start kube-apiserver kube-controller-manager kube-scheduler
+services="kube-apiserver kube-controller-manager kube-scheduler"
+systemctl enable ${services}
+systemctl start ${services}
+systemctl status --no-pager ${services}
 EOF
 
   until vagrant ssh "controller-${i}" -- curl --ipv4 --fail --silent --max-time 3 -k "https://localhost:6443/healthz" &>/dev/null; do
