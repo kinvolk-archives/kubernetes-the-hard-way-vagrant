@@ -168,7 +168,7 @@ Deploy the DNS add-on and verify it's working:
 ```
 kubectl apply -f ./manifests/coredns.yaml
 [...]
-kubectl get pods -l k8s-app=kube-dns -n kube-system
+kubectl get pods -l k8s-app=coredns -n kube-system
 [...]
 kubectl run busybox --image=busybox:1.28 --command -- sleep 3600
 [...]
