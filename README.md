@@ -177,13 +177,15 @@ kubectl exec -ti busybox -- nslookup kubernetes
 
 ### Smoke tests
 
-```
+```console
 $ kubectl create -f ./manifests/nginx.yaml
 deployment "nginx" created
 service "nginx" created
+```
 
-NODE_PORT=$(kubectl get svc nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
-for i in {0..2}; do curl -sS 192.168.199.2${i}:${NODE_PORT} | awk '/<h1>/{gsub("<[/]*h1>", ""); print $0}'; done
+```console
+$ NODE_PORT=$(kubectl get svc nginx --output=jsonpath='{range .spec.ports[0]}{.nodePort}')
+$ for i in {0..2}; do curl -sS 192.168.199.2${i}:${NODE_PORT} | awk '/<h1>/{gsub("<[/]*h1>", ""); print $0}'; done
 Welcome to nginx!
 Welcome to nginx!
 Welcome to nginx!
