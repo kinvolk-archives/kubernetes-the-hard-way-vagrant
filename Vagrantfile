@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
         c.vm.provision :shell, :path => "scripts/vagrant-setup-hosts-file.bash"
 
         c.vm.provider "virtualbox" do |vb|
-          vb.memory = "640"
+          vb.memory = "750"
         end
     end
   end
