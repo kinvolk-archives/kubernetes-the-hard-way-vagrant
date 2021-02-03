@@ -8,11 +8,12 @@ for i in {0..2}; do
   cat >"${dir}/../config/worker-${i}-10-bridge.conf" <<EOF
 {
     "cniVersion": "0.3.1",
-    "name": "crio-bridge",
+    "name": "crio",
     "type": "bridge",
-    "bridge": "cnio0",
+    "bridge": "cni0",
     "isGateway": true,
     "ipMasq": true,
+    "hairpinMode": true,
     "ipam": {
         "type": "host-local",
         "ranges": [

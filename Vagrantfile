@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "512"
@@ -17,7 +17,6 @@ Vagrant.configure("2") do |config|
       c.vm.provision :shell, :path => "scripts/vagrant-setup-haproxy.bash"
 
       c.vm.provider "virtualbox" do |vb|
-        vb.memory = "256"
       end
   end
 
@@ -29,7 +28,7 @@ Vagrant.configure("2") do |config|
         c.vm.provision :shell, :path => "scripts/vagrant-setup-hosts-file.bash"
 
         c.vm.provider "virtualbox" do |vb|
-          vb.memory = "640"
+          vb.memory = "750"
         end
     end
   end

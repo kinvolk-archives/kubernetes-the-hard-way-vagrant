@@ -20,13 +20,13 @@ trap 'popd; rm -rf "${tmpdir}"' EXIT
 source "${dir}/versions.bash"
 
 curl -sSL \
-  -O "https://pkg.cfssl.org/${cfssl_version}/cfssl_${binary_platform}-${binary_format}" \
-  -O "https://pkg.cfssl.org/${cfssl_version}/cfssljson_${binary_platform}-${binary_format}"
+  -O "https://github.com/cloudflare/cfssl/releases/download/v${cfssl_version}/cfssl_${cfssl_version}_${binary_platform}_${binary_format}" \
+  -O "https://github.com/cloudflare/cfssl/releases/download/v${cfssl_version}/cfssljson_${cfssl_version}_${binary_platform}_${binary_format}"
 
-chmod +x cfssl_${binary_platform}-${binary_format} cfssljson_${binary_platform}-${binary_format}
+chmod +x cfssl_${cfssl_version}_${binary_platform}_${binary_format} cfssljson_${cfssl_version}_${binary_platform}_${binary_format}
 
-sudo mv -v cfssl_${binary_platform}-${binary_format} /usr/local/bin/cfssl
-sudo mv -v cfssljson_${binary_platform}-${binary_format} /usr/local/bin/cfssljson
+sudo mv -v cfssl_${cfssl_version}_${binary_platform}_${binary_format} /usr/local/bin/cfssl
+sudo mv -v cfssljson_${cfssl_version}_${binary_platform}_${binary_format} /usr/local/bin/cfssljson
 
 curl -ssL \
   -O "https://storage.googleapis.com/kubernetes-release/release/${k8s_version}/bin/${binary_platform}/${binary_format}/kubectl"

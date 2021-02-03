@@ -26,17 +26,10 @@ curl -sSL \
 tar -xf "etcd-${etcd_version}-linux-amd64.tar.gz"
 
 curl -sSL \
-  -O "https://github.com/containernetworking/plugins/releases/download/${cni_plugins_version}/cni-plugins-linux-amd64-${cni_plugins_version}.tgz" \
-  -O "https://github.com/opencontainers/runc/releases/download/${runc_version}/runc.amd64" \
   -O "https://github.com/cri-o/cri-o/releases/download/${crio_version}/crio-${crio_version}.tar.gz" \
-  -O "https://github.com/containers/conmon/releases/download/${conmon_version}/conmon" \
-  -O https://raw.githubusercontent.com/seccomp/containers-golang/master/seccomp.json
 
 tar -xf "crio-${crio_version}.tar.gz"
 mv "crio-${crio_version}" crio
-mv crio/bin/crio-x86_64-static-glibc crio/bin/crio
-
-mv runc.amd64 runc
 
 curl -sSL \
   -O "https://github.com/containous/traefik/releases/download/${traefik_version}/traefik_linux-amd64"
@@ -50,6 +43,4 @@ chmod +x \
   kube-proxy \
   kubelet \
   kubectl \
-  runc \
-  traefik \
-  conmon
+  traefik

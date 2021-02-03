@@ -12,6 +12,7 @@ trap 'popd' EXIT
 ./scripts/generate-kubeconfig-kube-proxy
 ./scripts/generate-kubeconfig-worker
 ./scripts/generate-kubeconfig-controller-manager
+./scripts/generate-kubeconfig-scheduler
 ./scripts/generate-cni-config
 ./scripts/generate-service-files
 ./scripts/download-tools

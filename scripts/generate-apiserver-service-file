@@ -35,6 +35,8 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --kubelet-https=true \\
   --runtime-config=api/all=true \\
   --service-account-key-file=/var/lib/kubernetes/ca-key.pem \\
+  --service-account-signing-key-file=/var/lib/kubernetes/ca-key.pem \\
+  --service-account-issuer=api \\
   --service-cluster-ip-range=10.32.0.0/24 \\
   --service-node-port-range=30000-32767 \\
   --tls-cert-file=/var/lib/kubernetes/kubernetes.pem \\

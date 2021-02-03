@@ -17,6 +17,7 @@ authentication:
     clientCAFile: "/var/lib/kubernetes/ca.pem"
 authorization:
   mode: Webhook
+cgroupDriver: systemd
 clusterDomain: "cluster.local"
 clusterDNS:
 - "10.32.0.10"
