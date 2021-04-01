@@ -11,7 +11,7 @@ vagrant up traefik-0
 
 kubectl --namespace=kube-system create serviceaccount traefik
 
-cat <<EOF | vagrant ssh "controller-0" -- kubectl apply -f -
+cat <<EOF | kubectl apply -f -
 
 ---
 kind: ClusterRole
